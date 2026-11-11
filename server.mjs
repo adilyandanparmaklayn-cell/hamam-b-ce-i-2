@@ -29,19 +29,23 @@ wss.on("connection", socket => {
 
 const connection = new TikTokLiveConnection(USERNAME, {});
 
-connection.on(WebcastEvent.CHAT, data => {
+connection.on(WebcastEvent.FOLLOW, data => {
   broadcast({
-    type: "chat",
-    username: data.user?.uniqueId || "izleyici",
-    comment: data.comment || ""
+    type: "follow",
+    username: data.user?.uniqueId || "izleyici"
   });
 });
 
 connection.on(WebcastEvent.GIFT, data => {
+  const coins =
+    (data.giftDetails?.diamondCount || data.diamondCount || 0) *
+    (data.repeatCount || 1);
+
   broadcast({
     type: "gift",
     username: data.user?.uniqueId || "izleyici",
-    giftName: data.giftName || "Hediye"
+    giftName: data.giftName || "Hediye",
+    coins
   });
 });
 
@@ -68,4 +72,3 @@ connection.connect()
 server.listen(PORT, () => {
   console.log("Sunucu çalışıyor:", PORT);
 });
-    
