@@ -53,9 +53,17 @@ connection.on(WebcastEvent.LIKE, data => {
   });
 });
 
+console.log("TikTok LIVE bağlantısı deneniyor:", USERNAME);
+
 connection.connect()
-  .then(() => console.log("TikTok bağlantısı kuruldu."))
-  .catch(error => console.error("TikTok bağlantı hatası:", error));
+  .then(state => {
+    console.log("TikTok LIVE BAĞLANDI!");
+    console.log("Oda numarası:", state.roomId);
+  })
+  .catch(error => {
+    console.error("TIKTOK BAĞLANTI HATASI:");
+    console.error(error?.stack || error);
+  });
 
 server.listen(PORT, () => {
   console.log("Sunucu çalışıyor:", PORT);
