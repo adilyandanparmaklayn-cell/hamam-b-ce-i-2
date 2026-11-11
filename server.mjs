@@ -27,7 +27,7 @@ wss.on("connection", socket => {
   }));
 });
 
-const connection = new TikTokLiveConnection(USERNAME);
+const connection = new TikTokLiveConnection(USERNAME, {});
 
 connection.on(WebcastEvent.CHAT, data => {
   broadcast({
